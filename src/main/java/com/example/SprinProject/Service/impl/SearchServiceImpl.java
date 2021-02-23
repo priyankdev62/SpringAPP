@@ -18,6 +18,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
 
     public ProductResponseDTO getProducts(ProductRequestDTO requestDTO) {
+        //String str ="stock location:" + requestDTO/getSearchLocation();
         Map<String, Object> productResponse = searchClient.getProducts(requestDTO.getSearchTerm());
         List<Product> productList = new ArrayList<Product>();
         List<Map<String, Object>> products = (List<Map<String, Object>>) (((Map<String, Object>) (productResponse.get("response"))).get("docs"));
@@ -25,18 +26,33 @@ public class SearchServiceImpl implements SearchService {
             Product p1 = new Product();
             p1.setDescription((String) product.get("description"));
             
-//            p1.setInstock((int) product.get("isInStock"));
-//            p1.setSalePrice((double) product.get("salePrice"));
+            p1.setInstock((int) product.get("isInStock")==1?true:false);
+            p1.setSalePrice(((Double) product.get("salePrice")).intValue());
             p1.setTitle((String) product.get("name"));
             productList.add(p1);
         }
+        //Map<String, Object>  = searchClient.getProducts(requestDTO.getSearchTerm());
+
+
+        Map<String, Object> locationResponse = searchClient.getProducts("q="+requestDTO.getSearchLocation());
+        List<Product> productList2 = new ArrayList<Product>();
+        List<Map<String, Object>> location = (List<Map<String, Object>>) (((Map<String, Object>) (productResponse.get("response"))).get("docs"));
+        for (Map<String, Object> product : location) {
+            Product p1 = new Product();
+            p1.setDescription((String) product.get("description"));
+
+            p1.setInstock((int) product.get("isInStock")==1?true:false);
+            p1.setSalePrice(((Double) product.get("salePrice")).intValue());
+            p1.setTitle((String) product.get("name"));
+            productList2.add(p1);
+        }
+
+
+
+
         ProductResponseDTO responseDTO = new ProductResponseDTO();
-        /*Product product1 = new Product();
-        product1.setTitle("Smartphone");
-        product1.setInstock(true);
-        product1.setSalePrice(15999);
-        product1.setDescription("Xiaomi Redmi Note 5 pro");*/
         responseDTO.setProductList(productList);
+        responseDTO.setLocationBasedProduct(productList2);
         return responseDTO;
     }
 
