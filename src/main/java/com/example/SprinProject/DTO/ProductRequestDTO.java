@@ -10,9 +10,15 @@ public class ProductRequestDTO {
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
     }
+<<<<<<< Updated upstream
     @Override
     public String toString(){
         return "ProductRequestDTO{"+"searchTerm"+searchTerm+ '\'' +
                 '}';
     }
 }
+=======
+
+}
+
+>>>>>>> Stashed changes

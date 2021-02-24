@@ -11,11 +11,11 @@ public class Product {
         this.instock = instock;
     }
 
-    public int getSalePrice() {
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(int salePrice) {
+    public void setSalePrice(Double salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -35,7 +35,7 @@ public class Product {
         this.title = title;
     }
 
-    private int salePrice;
+    private Double salePrice;
     private String description;
     private String title;
 
